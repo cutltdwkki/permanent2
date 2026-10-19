@@ -1,69 +1,78 @@
-import Image from "next/image";
+import { ServicesSection } from "./components/services-section";
+import { SiteHeader } from "./components/site-header";
+
+const phoneDisplay = "+7 (900) 000-00-00";
+const phoneHref = "tel:+79000000000";
+const whatsappHref = "https://wa.me/79000000000";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+    <>
+      <SiteHeader phoneDisplay={phoneDisplay} phoneHref={phoneHref} />
+
+      <main>
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero__media" aria-hidden="true">
+            <img
+              className="hero__photo"
+              src="/pictures/хиро.png?v=3"
+              alt=""
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          </div>
+
+          <div className="container hero__content">
+            <h1 className="hero__title" id="hero-title">
+              <span className="hero__title-line">
+                <span className="hero__title-thin">Брови как ваши —</span>
+              </span>
+              <span className="hero__title-line">
+                <span className="hero__title-strong">сразу и после</span>
+              </span>
+              <span className="hero__title-line">
+                <span className="hero__title-strong">заживления</span>
+              </span>
+            </h1>
+
+            <div className="hero__row">
+              <div className="hero__contacts">
+                <a className="hero__phone" href={phoneHref}>
+                  {phoneDisplay}
+                </a>
+                <a
+                  className="hero__wa"
+                  href={whatsappHref}
+                  aria-label="WhatsApp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12.04 3C7.31 3 3.48 6.83 3.48 11.56c0 1.5.4 2.96 1.15 4.24L3 21l5.34-1.4a8.53 8.53 0 0 0 3.7.85h.01c4.73 0 8.56-3.83 8.56-8.56C20.6 6.83 16.77 3 12.04 3zm4.96 12.13c-.2.58-1.18 1.1-1.64 1.17-.42.06-.96.09-1.55-.1-.36-.11-.82-.27-1.41-.53-2.48-1.07-4.1-3.57-4.22-3.74-.12-.17-1-1.33-1-2.54s.63-1.8.86-2.05c.22-.24.48-.3.64-.3h.46c.15 0 .34 0 .52.4.2.56.67 1.93.73 2.07.06.14.1.3.02.48-.08.17-.12.28-.24.43l-.36.42c-.12.12-.24.25-.1.49.14.24.62.99 1.33 1.61.91.81 1.68 1.06 1.92 1.18.24.12.38.1.52-.06l.62-.72c.16-.18.32-.15.54-.09l1.86.88c.22.1.36.16.42.25.05.08.05.5-.15 1.08z" />
+                  </svg>
+                </a>
+              </div>
+
+              <div className="hero__aside">
+                <ul className="hero__perks">
+                  <li>Анестезия</li>
+                  <li>Эскиз в цене</li>
+                  <li>Сопровождение в заживлении</li>
+                </ul>
+                <p className="hero__lead">
+                  Анализ лица, подбор оттенка и предварительная прорисовка до
+                  того, как мастер возьмёт аппарат.
+                </p>
+                <div className="hero__actions">
+                  <a className="btn btn--light" href="#form">
+                    Записаться на консультацию
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <ServicesSection whatsappHref={whatsappHref} />
+        <div id="form" />
       </main>
-    </div>
+    </>
   );
 }

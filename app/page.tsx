@@ -1,3 +1,6 @@
+import { FamiliarSection } from "./components/familiar-section";
+import { QuizSection } from "./components/quiz-section";
+import { ResultsSection } from "./components/results-section";
 import { ServicesSection } from "./components/services-section";
 import { SiteHeader } from "./components/site-header";
 
@@ -71,6 +74,9 @@ export default function Home() {
           </div>
         </section>
         <ServicesSection whatsappHref={whatsappHref} />
+        <FamiliarSection />
+        <QuizSection whatsappHref={whatsappHref} />
+        <ResultsSection />
         <div id="form" />
       </main>
     </>

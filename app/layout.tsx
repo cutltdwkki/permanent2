@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./promo.css";
+import "./footer.css";
 
 export const metadata: Metadata = {
   title: "Студия перманентного макияжа",

@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "#services", label: "Услуги" },
-  { href: "#faq", label: "Частые вопросы" },
-  { href: "#contacts", label: "Контакты" },
+  { href: "#results", label: "Работы" },
+  { href: "#reviews", label: "Отзывы" },
+  { href: "#faq", label: "Вопросы" },
 ];
 
 const blurLayers = [
@@ -15,6 +16,17 @@ const blurLayers = [
   { blur: "1px", mask: "linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%)" },
 ];
 
+const accentSelector = ".results, .apply";
+
+function accentUnderHeader(headerH: number) {
+  const nodes = document.querySelectorAll(accentSelector);
+  for (const node of nodes) {
+    const rect = node.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < headerH) return true;
+  }
+  return false;
+}
+
 export function SiteHeader({
   phoneDisplay,
   phoneHref,
@@ -22,26 +34,65 @@ export function SiteHeader({
   phoneDisplay: string;
   phoneHref: string;
 }) {
+  const headerRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const [solid, setSolid] = useState(false);
+  const [onAccent, setOnAccent] = useState(false);
+  const [footerNear, setFooterNear] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const hero = document.querySelector(".hero");
+    const footer = document.querySelector(".site-footer");
+    let frame = 0;
 
-    const update = () => {
-      const bottom = hero
-        ? hero.getBoundingClientRect().bottom
-        : window.innerHeight - window.scrollY;
-      setSolid(bottom < 140);
+    const footerIsNear = () => {
+      if (!footer) return false;
+      const rect = footer.getBoundingClientRect();
+      return rect.top < window.innerHeight + 48 && rect.bottom > 0;
     };
 
+    const update = () => {
+      frame = 0;
+      const headerH = headerRef.current?.offsetHeight ?? 84;
+      const heroBottom = hero
+        ? hero.getBoundingClientRect().bottom
+        : window.innerHeight - window.scrollY;
+
+      setSolid(heroBottom < 140);
+      setOnAccent(accentUnderHeader(headerH));
+      setFooterNear(footerIsNear());
+    };
+
+    const onScrollOrResize = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
+    };
+
+    const observer = footer
+      ? new IntersectionObserver(
+          ([entry]) => {
+            setFooterNear(Boolean(entry?.isIntersecting) || footerIsNear());
+          },
+          {
+            root: null,
+            // Прячем хедер чуть раньше, чем футер полностью займёт кадр.
+            rootMargin: "0px 0px 48px 0px",
+            threshold: 0,
+          },
+        )
+      : null;
+
+    if (footer && observer) observer.observe(footer);
+
     update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      if (frame) window.cancelAnimationFrame(frame);
+      observer?.disconnect();
     };
   }, []);
 
@@ -62,8 +113,21 @@ export function SiteHeader({
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  const className = [
+    "site-header",
+    solid ? "is-solid" : "",
+    onAccent ? "is-on-accent" : "",
+    footerNear && !open ? "is-hidden" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <header className={solid ? "site-header is-solid" : "site-header"}>
+    <header
+      ref={headerRef}
+      className={className}
+      aria-hidden={footerNear && !open ? true : undefined}
+    >
       <span className="site-header__veil" aria-hidden="true">
         {blurLayers.map((layer) => (
           <span

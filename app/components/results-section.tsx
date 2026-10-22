@@ -9,70 +9,80 @@ const folder = `/pictures/${encodeURIComponent("результат")}`;
 type Work = {
   file: string;
   alt: string;
-  /** Зона: брови, губы, межресничное пространство. Пустое поле — ещё не заполнено. */
+  /** Название варианта перманента. */
+  name: string;
+  /** Зона. Пустое поле — ещё не заполнено. */
   zone: string;
   /** Техника. Пустое поле — ещё не заполнено. */
   technique: string;
-  /** Срок: сразу после процедуры или после заживления. Пустое поле — ещё не заполнено. */
+  /** Ориентировочный срок носки. Пустое поле — ещё не заполнено. */
   when: string;
 };
 
 const works: Work[] = [
   {
     file: "IMG_4179.JPG",
-    alt: "Портрет девушки с оформленными бровями и губами",
-    zone: "",
-    technique: "",
-    when: "",
+    alt: "Brow Reset: портрет с оформленными бровями",
+    name: "Brow Reset",
+    zone: "Брови",
+    technique: "Пудровое напыление",
+    when: "1–2 года",
   },
   {
     file: "до после 2.JPG",
-    alt: "Сравнение лица до и после оформления бровей",
-    zone: "",
-    technique: "",
-    when: "",
-  },
-  {
-    file: "до после 1.JPG",
-    alt: "Губы: кадр с подписью «До процедуры» и кадр «Заживший результат»",
-    zone: "",
-    technique: "",
-    when: "После заживления",
+    alt: "Perfect Brow: сравнение лица до и после оформления бровей",
+    name: "Perfect Brow",
+    zone: "Брови",
+    technique: "Волосковая техника",
+    when: "1–1,5 года",
   },
   {
     file: "IMG_4177.JPG",
-    alt: "Крупный план бровей, два кадра рядом",
-    zone: "",
-    technique: "",
-    when: "",
+    alt: "LINA Refresh: крупный план бровей",
+    name: "LINA Refresh",
+    zone: "Брови со старым перманентом",
+    technique: "Коррекция оттенка и формы, мягкое напыление",
+    when: "1–2 года",
+  },
+  {
+    file: "до после 1.JPG",
+    alt: "Soft Lips: губы до процедуры и заживший результат",
+    name: "Soft Lips",
+    zone: "Вся поверхность губ",
+    technique: "Акварельное напыление",
+    when: "1–2 года",
   },
   {
     file: "IMG_4185.JPG",
-    alt: "Крупный план губ, три кадра оттенка",
-    zone: "",
-    technique: "",
-    when: "",
+    alt: "Fresh Lips: крупный план губ",
+    name: "Fresh Lips",
+    zone: "Контур и поверхность губ",
+    technique: "Контур с мягкой растушёвкой",
+    when: "1–2 года",
   },
   {
     file: "IMG_2352.PNG",
-    alt: "Крупный план глаза",
-    zone: "",
-    technique: "",
-    when: "",
+    alt: "Lash Line: крупный план глаза",
+    name: "Lash Line",
+    zone: "Межресничное пространство верхнего века",
+    technique: "Межресничная стрелка",
+    when: "1–2 года",
   },
   {
     file: "IMG_3230.JPG",
-    alt: "Крупный план глаза и брови",
-    zone: "",
-    technique: "",
-    when: "",
+    alt: "Soft Eyeliner: крупный план глаза и брови",
+    name: "Soft Eyeliner",
+    zone: "Верхнее веко",
+    technique: "Тонкая стрелка с растушёвкой",
+    when: "1–2 года",
   },
   {
     file: "IMG_4187.JPG",
-    alt: "Крупный план ресниц и века",
-    zone: "",
-    technique: "",
-    when: "",
+    alt: "Express Eyes: крупный план ресниц и века",
+    name: "Express Eyes",
+    zone: "Верхнее и нижнее межресничное пространство",
+    technique: "Межресничное заполнение",
+    when: "1–2 года",
   },
 ];
 
@@ -110,7 +120,7 @@ function viewportFrame(ratio: number): Frame {
 const fields = [
   { key: "zone", label: "Зона" },
   { key: "technique", label: "Техника" },
-  { key: "when", label: "Срок" },
+  { key: "when", label: "Срок носки" },
 ] as const;
 
 function Viewer({
@@ -138,10 +148,11 @@ function Viewer({
   onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => void;
   onPointerUp: (event: ReactPointerEvent<HTMLDivElement>) => void;
 }) {
-  const caption = fields
+  const details = fields
     .map((field) => (work[field.key] ? `${field.label}: ${work[field.key]}` : ""))
     .filter(Boolean)
     .join("  ·  ");
+  const caption = [work.name, details].filter(Boolean).join("  ·  ");
 
   return (
     <div
@@ -499,6 +510,7 @@ export function ResultsSection() {
                     }}
                   />
                   <span className="results__caption">
+                    <span className="results__name">{work.name || "—"}</span>
                     {fields.map((field) => {
                       const value = work[field.key];
                       return (

@@ -1,7 +1,12 @@
+import { ApplySection } from "./components/apply-section";
+import { FaqSection } from "./components/faq-section";
 import { FamiliarSection } from "./components/familiar-section";
+import { PromoSection } from "./components/promo-section";
 import { QuizSection } from "./components/quiz-section";
 import { ResultsSection } from "./components/results-section";
+import { ReviewsSection } from "./components/reviews-section";
 import { ServicesSection } from "./components/services-section";
+import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 
 const phoneDisplay = "+7 (900) 000-00-00";
@@ -77,8 +82,16 @@ export default function Home() {
         <FamiliarSection />
         <QuizSection whatsappHref={whatsappHref} />
         <ResultsSection />
-        <div id="form" />
+        <ReviewsSection />
+        <PromoSection />
+        <FaqSection whatsappHref={whatsappHref} />
+        <ApplySection whatsappHref={whatsappHref} />
       </main>
+      <SiteFooter
+        phoneDisplay={phoneDisplay}
+        phoneHref={phoneHref}
+        whatsappHref={whatsappHref}
+      />
     </>
   );
 }

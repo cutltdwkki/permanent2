@@ -132,7 +132,7 @@ export function ServicesSection({ whatsappHref }: { whatsappHref: string }) {
   const titleId = useId();
   const [activeId, setActiveId] = useState(services[0].id);
   activeIdRef.current = activeId;
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openId, setOpenId] = useState<string | null>(services[0].id);
   const [narrow, setNarrow] = useState(false);
   const [selected, setSelected] = useState<Service>(services[0]);
   const [sent, setSent] = useState(false);

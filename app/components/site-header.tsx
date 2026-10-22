@@ -123,50 +123,52 @@ export function SiteHeader({
     .join(" ");
 
   return (
-    <header
-      ref={headerRef}
-      className={className}
-      aria-hidden={footerNear && !open ? true : undefined}
-    >
-      <span className="site-header__veil" aria-hidden="true">
-        {blurLayers.map((layer) => (
-          <span
-            key={layer.blur}
-            style={{
-              backdropFilter: `blur(${layer.blur})`,
-              WebkitBackdropFilter: `blur(${layer.blur})`,
-              maskImage: layer.mask,
-              WebkitMaskImage: layer.mask,
-            }}
-          />
-        ))}
-      </span>
-      <div className="container site-header__inner">
-        <a className="logo" href="/">
-          <span className="logo__word">LINA</span>
-          <span className="logo__pm">pm</span>
-          <span className="logo__word">CODE</span>
-        </a>
-        <nav className="nav" aria-label="Основная навигация">
-          {links.map((link) => (
-            <a key={link.href} href={link.href}>
-              {link.label}
-            </a>
+    <>
+      <header
+        ref={headerRef}
+        className={className}
+        aria-hidden={footerNear && !open ? true : undefined}
+      >
+        <span className="site-header__veil" aria-hidden="true">
+          {blurLayers.map((layer) => (
+            <span
+              key={layer.blur}
+              style={{
+                backdropFilter: `blur(${layer.blur})`,
+                WebkitBackdropFilter: `blur(${layer.blur})`,
+                maskImage: layer.mask,
+                WebkitMaskImage: layer.mask,
+              }}
+            />
           ))}
-        </nav>
-        <button
-          type="button"
-          className="menu-toggle"
-          aria-label="Открыть меню"
-          aria-expanded={open}
-          aria-controls="site-menu"
-          onClick={() => setOpen(true)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
+        </span>
+        <div className="container site-header__inner">
+          <a className="logo" href="/">
+            <span className="logo__word">LINA</span>
+            <span className="logo__pm">pm</span>
+            <span className="logo__word">CODE</span>
+          </a>
+          <nav className="nav" aria-label="Основная навигация">
+            {links.map((link) => (
+              <a key={link.href} href={link.href}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-label="Открыть меню"
+            aria-expanded={open}
+            aria-controls="site-menu"
+            onClick={() => setOpen(true)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+      </header>
 
       <div
         id="site-menu"
@@ -208,6 +210,6 @@ export function SiteHeader({
           {phoneDisplay}
         </a>
       </div>
-    </header>
+    </>
   );
 }

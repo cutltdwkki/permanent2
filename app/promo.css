@@ -281,25 +281,32 @@
 }
 
 @media (max-width: 960px) {
+  .promo {
+    padding-top: var(--space-section);
+  }
+
   .promo__layout {
     display: flex;
     flex-direction: column;
-    row-gap: 0;
+    align-items: stretch;
+    row-gap: 1.35rem;
   }
 
   .promo__copy {
     container-type: normal;
-    align-self: flex-start;
-    width: min(100%, 15.5rem);
+    position: relative;
+    z-index: 1;
+    align-self: stretch;
+    width: 100%;
     max-width: 100%;
-    margin: 0 0 -5.6rem;
+    margin: 0;
   }
 
   .promo__title {
     width: auto;
     max-width: 100%;
-    font-size: clamp(1.9rem, 8.6vw, 2.2rem);
-    line-height: 0.92;
+    font-size: clamp(2.45rem, 11vw, 3.15rem);
+    line-height: 0.94;
     letter-spacing: -0.03em;
   }
 
@@ -352,28 +359,47 @@
   }
 
   .promo__kicker {
-    margin-top: 0.75rem;
+    margin-top: 0.85rem;
+    white-space: normal;
   }
 
   .promo__photo {
+    position: relative;
+    z-index: 0;
     width: 100%;
+    max-width: 100%;
     margin: 0;
+  }
+
+  .promo__frame {
+    width: 100%;
+    max-width: 26rem;
+    margin-inline: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .promo__frame img {
+    object-position: center 18%;
   }
 
   .promo__details {
     align-self: stretch;
     justify-content: flex-start;
-    gap: 24px;
-    padding-top: 1.65rem;
+    gap: 1.25rem;
+    padding-top: 0.15rem;
     padding-bottom: 0;
   }
 
+  .promo__details > :first-child {
+    margin-bottom: 0.35rem;
+  }
+
   .promo__now {
-    font-size: clamp(3rem, 14vw, 4.25rem);
+    font-size: clamp(2.85rem, 13vw, 4rem);
   }
 
   .promo__count-now {
-    font-size: clamp(2.8rem, 12vw, 3.6rem);
+    font-size: clamp(2.6rem, 11vw, 3.4rem);
   }
 
   .promo__cta {

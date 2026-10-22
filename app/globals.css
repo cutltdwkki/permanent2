@@ -151,6 +151,13 @@
   --header-pad: 3.125rem;
 }
 
+@media (max-width: 900px) {
+  :root {
+    --gutter: clamp(1.15rem, 5.2vw, 1.5rem);
+    --space-section: clamp(3.5rem, 11vw, 4.75rem);
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -831,7 +838,7 @@ p {
     max-width: 11em;
     transform: none;
     margin-bottom: 0.9rem;
-    font-size: calc((100vw - 2 * var(--gutter) - 4px) / 8.21);
+    font-size: clamp(2.45rem, 9.4vw, 3.55rem);
     font-weight: 400;
     line-height: 0.9;
   }
@@ -1456,7 +1463,7 @@ p {
 
 @media (max-width: 900px) {
   .familiar {
-    --travel: 18vw;
+    --travel: 12vw;
   }
 
   .familiar__board {
@@ -2226,6 +2233,11 @@ p {
     row-gap: 1.5rem;
   }
 
+  .results__rail {
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .results__action {
     width: 100%;
   }
@@ -2389,6 +2401,7 @@ p {
 /* reviews */
 .reviews {
   position: relative;
+  overflow-x: clip;
   background: var(--background);
   color: inherit;
 }
@@ -2460,10 +2473,12 @@ p {
 }
 
 .reviews__avatar {
+  position: relative;
   display: grid;
   flex: none;
   flex-shrink: 0;
   place-items: center;
+  overflow: hidden;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -2476,10 +2491,13 @@ p {
 }
 
 .reviews__avatar img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border-radius: inherit;
   object-fit: cover;
+  object-position: center 20%;
 }
 
 .reviews__person {
@@ -2525,20 +2543,31 @@ p {
     min-height: 0;
     height: auto;
     justify-content: flex-start;
-    padding-top: 4.6rem;
-    padding-bottom: 0;
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
   }
 
   .reviews__pin > .container {
     display: block;
     flex: none;
+    width: min(var(--container), calc(100% - var(--gutter) * 2));
+    max-width: none;
+  }
+
+  .reviews__title {
+    margin: 0 0 1.25rem;
   }
 
   .reviews__stage {
     container-type: inline-size;
+    width: calc(100% + var(--gutter));
+    max-width: none;
     height: auto;
+    margin-right: calc(var(--gutter) * -1);
     overflow-x: auto;
     overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
@@ -2553,12 +2582,14 @@ p {
     width: max-content;
     height: auto;
     gap: 0.8rem;
+    padding-right: var(--gutter);
   }
 
   .reviews__card {
     position: static;
     flex: none;
-    width: calc(100cqi - 4.25rem);
+    width: calc(100cqi - 1.5rem);
+    max-width: 22rem;
     height: auto;
     visibility: visible;
     transform: none;
